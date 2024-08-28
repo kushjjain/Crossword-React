@@ -1,25 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-const CrossGrid = () => {
-    const grid = [
-        ['F', 'O', 'R', 'X', 'G', 'I', 'Q', 'K', 'M', 'C'],
-        ['A', 'N', 'J', 'S', 'W', 'I', 'T', 'C', 'H', 'F'],
-        ['S', 'V', 'E', 'C', 'D', 'O', 'N', 'M', 'U', 'O'],
-        ['T', 'A', 'L', 'T', 'U', 'Z', 'V', 'N', 'T', 'K'],
-        ['A', 'R', 'P', 'N', 'L', 'E', 'C', 'S', 'A', 'R'],
-        ['T', 'I', 'U', 'T', 'C', 'T', 'O', 'E', 'F', 'G'],
-        ['I', 'A', 'T', 'A', 'I', 'E', 'R', 'A', 'Q', 'S'],
-        ['C', 'B', 'E', 'O', 'K', 'B', 'D', 'M', 'E', 'E'],
-        ['O', 'L', 'N', 'O', 'N', 'T', 'I', 'N', 'U', 'T'],
-        ['R', 'E', 'T', 'U', 'R', 'N', 'U', 'K', 'X', 'S'],
-    ];
-
-    const wordsToFind = ['FOR', 'SWITCH', 'BREAK',  'RETURN','SETS','FUNCTION','STATIC','TUPLE','VARIABLE'];
+const CrossGrid = ({grid,questions,wordsToFind}) => {
     const [selectedCells, setSelectedCells] = useState([]);
     const [foundWords, setFoundWords] = useState([]);
     const [highlightedCells, setHighlightedCells] = useState([]);
     const [incorrectCells, setIncorrectCells] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
+    const [highlightedQuestions,setHighlightedQuestions] = useState([]);
 
     useEffect(() => {
         if (selectedCells.length > 0) {
@@ -47,11 +34,13 @@ const CrossGrid = () => {
 
     const checkWordCompletion = () => {
         const selectedWord = selectedCells.map(([r, c]) => grid[r][c]).join('');
-        if (wordsToFind.includes(selectedWord)) {
+        const wordIndex = wordsToFind.indexOf(selectedWord);
+        if (wordIndex!== -1) {
             setFoundWords([...foundWords, selectedWord]);
             setHighlightedCells(prevHighlighted => [...prevHighlighted, ...selectedCells]); 
             setSelectedCells([]); 
             setErrorMessage(''); 
+            setHighlightedQuestions(prevQuestions => [...prevQuestions,wordIndex])
         } else {
             setErrorMessage('Incorrect word!'); 
             setIncorrectCells(selectedCells); 
@@ -115,17 +104,12 @@ const CrossGrid = () => {
 
             </div>
             </div>
-            <div className='flex flex-col gap-5'>
+            <div className='flex flex-col gap-5 ml-10'>
                 <p className='text-[30px] font-bold'>Questions:- </p>
-                    <p>1)To remove duplicate elements from a list in Python, you can convert it to a_______</p>
-                    <p>2)To iterate over each item in a list and perform an action on each item, you use a _________ loop in Python.</p>
-                    <p>3)To handle multiple cases based on a variable's value, use a _________ statement.</p>
-                    <p>4)To reuse code for specific tasks, define a _________.</p>
-                    <p>5)To send a value back from a function, use the _________ statement.</p>
-                    <p>6)To create a class-level variable or method in Java, use the _________ keyword.</p>
-                    <p>7)In Java, to exit from a loop prematurely, you use the _________ statement.</p>
-                    <p>8)In Python, an immutable sequence of elements that can be used to store multiple items is called a _________.</p>
-                    <p>9)In Python, a name used to store and refer to a value is called a _________.</p>
+                {questions.map((question,index) => (
+                    <p key={index} className={`${highlightedQuestions.includes(index) ? 'text-green-600' : ''}`}
+                    >{index+1}) {question}</p>
+                ))}
             </div>
         </div>
     );
