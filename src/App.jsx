@@ -22,10 +22,9 @@ const questions = [
   " To send a value back from a function, use the _________ statement.",
   " To create a class-level variable or method in Java, use the _________ keyword.",
   " In Java, to exit from a loop prematurely, you use the _________ statement.",
-  " In Python, an immutable sequence of elements that can be used to store multiple items is called a _________.",
-  " In Python, a name used to store and refer to a value is called a _________."
+  " In Python, an immutable sequence of elements that can be used to store multiple items is called a _________."
 ];
-const wordsToFind = ['SWITCH','FOR', 'BREAK',  'RETURN','SETS','FUNCTION','STATIC','TUPLE','VARIABLE'];
+const wordsToFind = ['SWITCH','FOR', 'BREAK',  'RETURN','SETS','FUNCTION','STATIC','TUPLE'];
 function App() {
 
   return (
