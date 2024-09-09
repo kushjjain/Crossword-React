@@ -7,7 +7,7 @@ function String() {
 
   const handleNavigation = () => {
     
-    navigate('/Iteration');
+    navigate('/Tkinter');
   };
 
 const grid = [
